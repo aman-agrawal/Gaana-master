@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome to My Music</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/extra/bootstrap.min.css">
+  <script src="static/extra/jquery.min.js"></script>
+  <script src="static/extra/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='play.js') }}"></script>
+ <script type="text/javascript" src="{{ url_for('static', filename='upload.js') }}"></script> 
+ <script type="text/javascript" src="{{ url_for('static', filename='view_guest.js') }}"></script>   
+ <script type="text/javascript" src="{{ url_for('static', filename='guest.js') }}"></script>   
+  <style>    
+    /* Set black background color, white text and some padding */
+
+
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    #footer {
+     position: fixed;
+     top:auto;
+     bottom:0px;
+    }
+
+    audio:hover, audio:focus, audio:active
+{
+-webkit-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+-moz-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+-webkit-transform: scale(1.05);
+-moz-transform: scale(1.05);
+transform: scale(1.05);
+}
+.glyphicon.glyphicon-globe {
+    font-size: 20px;
+}
+
+    
+  </style>
+</head>
+<body style = "background : #E6E6FA ">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+<h2 href="#" class = "text-center" style = "color : #ff2469">MyMusic</h2>
+
+
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+       <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container text-center">    
+  <div class="row">
+    <div class="col-sm-3 well">
+       <p style="float : left"> <img src="static/pics/guitar2.png" class = "image-responsive hidden-xs hidden-sm"height = "300px" width = "260px"  alt="Avatar"></p>
+      <div class="alert alert-primary fade in">
+        <p><strong><a href = "/login">Login to enjoy more</a></strong></p>
+      </div>
+    </div>
+
+
+
+
+    <div class="col-sm-7">
+
+      
+  <div id = "genre" style = "display:initial">  
+    {% for row in genre  %}
+      {% if loop.index %2 == 1 %}
+      {% if not loop.last %}
+        <div class="row"  text-align = "center">
+        <div class="col-sm-6" text-align = "center">
+
+<img height="250" width="250" style = "cursor : pointer" src="{{row[2]}}" class="img-thumbnail img-responsive" alt="Cinque Terre"  onclick = "songsView('genre','{{row[1]}}','{{row[0]}}')" >
+        </div>
+        <div class="col-sm-6" text-align = "center">
+ <img src={{loop.nextitem[2]}} style = "cursor : pointer" onclick = "songsView('genre','{{loop.nextitem[1]}}','{{loop.nextitem[0]}}')" class="img-thumbnail img-responsive" height="250" width="250" alt="Avatar">
+          
+        </div>
+      </div>
+      <br>
+     {% endif %}
+     {% if loop.last %}
+        <div class="row"  text-align = "center">
+        <div class="col-sm-6">
+<img height="250" width="250" style = "cursor : pointer" src="{{row[2]}}" class="img-thumbnail img-responsive" alt="Cinque Terre"  onclick = "songsView('genre','{{row[1]}}','{{row[0]}}')" >
+        </div>
+      </div>
+     {% endif %} 
+    {% endif %}
+    {% endfor %} 
+  </div>
+
+
+    <div id = "artist" style = "display:none">  
+    {% for row in artist  %}
+      {% if loop.index %2 == 1 %}
+      {% if not loop.last %}
+        <div class="row"  text-align = "center">
+        <div class="col-sm-6" text-align = "center">
+
+<img height="180" width="200" style = "cursor : pointer" src="{{row[2]}}" class="img-thumbnail img-responsive" alt="Cinque Terre"  onclick = "songsView('artist','{{row[1]}}','{{row[0]}}')" >
+        </div>
+        <div class="col-sm-6" text-align = "center">
+ <img src={{loop.nextitem[2]}} style = "cursor : pointer" onclick = "songsView('artist','{{loop.nextitem[1]}}','{{loop.nextitem[0]}}')" class="img-thumbnail img-responsive" height="180" width="200" alt="Avatar">
+          
+        </div>
+      </div>
+      <br>
+     {% endif %}
+     {% if loop.last %}
+        <div class="row"  text-align = "center">
+        <div class="col-sm-6">
+<img height="180" width="200" style = "cursor : pointer" src="{{row[2]}}" class="img-thumbnail img-responsive" alt="Cinque Terre"  onclick = "songsView('artist','{{row[1]}}','{{row[0]}}')" >
+        </div>
+      </div>
+     {% endif %} 
+    {% endif %}
+    {% endfor %} 
+  </div>
+
+
+    <div id  = "trending" style = "display:none">
+   {% for row in artist  %}
+
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+           <img src={{row[2]}} class="img-rounded" height="90" width="110" alt="Avatar">
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="well">
+            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}       
+  </div>
+
+
+    <div id  = "radio" style = "display:none">
+   {% for row in artist  %}
+
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+           <img src={{row[2]}} class="img-rounded" height="90" width="110" alt="Avatar">
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="well">
+            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}       
+  </div>
+
+
+      <div id = "song_list" style = "display:none">  
+
+    </div>
+
+    </div>
+
+
+
+
+
+    <div class="col-sm-2 well" >
+      <div class="thumbnail" style = "cursor : pointer" onclick = "changeView('genre')">
+        <p >Genre</p>
+      </div>      
+      <div class="thumbnail"  style = "cursor : pointer" onclick = "changeView('artist')">
+        <p>Artists</p>
+      </div>
+      <div class="thumbnail" onclick = "viewTrending()" style = "cursor : pointer">
+        <p>Trending</p>
+      </div>
+      <div class ="thumbnail" style = "cursor : pointer" >
+        <p>Radio : </p>
+        <p><a onclick = "devotional_view()" style="cursor:pointer">Devotinal Mode</a></p>
+        <p><a onclick = "hiphop_view()" style="cursor:pointer">Workout Mode</a></p>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<footer class="container-fluid text-center" id = "footer">
+ <audio preload = "none" controls id = 'play' src = ""  ></audio>
+</footer>
+
+</body>
+</html>

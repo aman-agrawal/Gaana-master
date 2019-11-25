@@ -1,0 +1,21 @@
+
+
+    {% for row in rows  %}
+        <div class="row"  style = "border : 1px solid grey">
+          <div class  ="col-sm-4"  style = "">
+           <img src="/download_files/img/{{row[0]}}" style = "cursor : pointer" class="img-thumbnail" height="120" width="120" alt="Avatar">
+          </div>
+          <div class = "col-sm-8">
+            <h4>{{row[1]}}</h4>
+
+                  <a href="/download_files/mp3/{{row[0]}}" target="blank" download><span style = "color:black;" class="glyphicon glyphicon-save btn-lg">download</span>&nbsp;</a>
+
+         <div
+               class="audio_button btn  btn-lg" onclick = "play('{{row[0]}}')" val = "{{row[0]}}"><span class="glyphicon glyphicon-play"></span>&nbsp;play
+         </div>
+
+         <div  class="atp_button btn btn-lg" data-toggle="modal" data-target="#myModal1" onclick = "add_to_modal('{{row[0]}}','{{row[1]}}')" ><span style = "color:black;" class="glyphicon glyphicon-list"></span>&nbsp;add to playlist</div>
+       </div>
+      </div><br>
+
+    {% endfor %} 

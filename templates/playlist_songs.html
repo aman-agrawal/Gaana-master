@@ -1,0 +1,22 @@
+    {% for row in rows  %}
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+           <img src="/download_files/img/{{row[1]}}" style = "cursor : pointer" class="img-rounded" height="90" width="110" alt="Avatar">
+          </div>
+        </div>
+        
+        <div class="col-sm-9">
+          <div class="well">
+          
+            <h4>{{row[2]}}</h4>
+                  <a href="/download_files/mp3/{{row[1]}}" target="blank" download><button class='btn btn-primary'>Download!</button></a>
+
+         <button type="button" class="btn btn-primary" onclick = "play('{{row[1]}}')">Play</button>
+   
+
+          </div>
+        </div>
+      </div>
+
+    {% endfor %} 

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>My Music</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/extra/bootstrap.min.css">
+  <script src="static/extra/jquery.min.js"></script>
+  <script src="static/extra/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='play.js') }}"></script>
+ <script type="text/javascript" src="{{ url_for('static', filename='upload.js') }}"></script> 
+ <script type="text/javascript" src="{{ url_for('static', filename='view.js') }}"></script>   
+
+  <style> 
+
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    #footer {
+     position: fixed;
+     top:auto;
+     bottom:0px;
+    }
+
+    audio:hover, audio:focus, audio:active
+{
+
+-webkit-transform: scale(1.05);
+-moz-transform: scale(1.05);
+transform: scale(1.05);
+}
+.glyphicon.glyphicon-globe {
+    font-size: 20px;
+}
+    
+  </style>
+</head>
+<body background="static/pics/3.jpg" style = "background : #E6E6FA ">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+<h2 href="#" style = "color : #ff2469">MyMusic</h2>
+  </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+  
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/update_pass"><span class="glyphicon glyphicon-user"></span> update Password</a></li>
+      <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container text-center">    
+  <div class="row">
+    <div class="col-sm-3 well">
+
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Upload Song</button>
+      <div style="border : 1px solid grey">
+      <div class="alert alert-default fade in" style = "border-bottom : 1px solid grey">
+        <p ><strong>Your Playlists</strong></p>
+      </div>
+      <div id = "dynamic_playlist">
+      <p><a onclick = "playlist_view('{{}}')" style="cursor:pointer">{{row}}</a></p>
+      {% endfor %}
+      </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="col-sm-7">
+
+    <div id = "genre" style = "display:initial">  
+    {% for row in genre  %}
+      {% if loop.index %2 == 1 %}
+      {% if not loop.last %}
+        <div class="row"  text-align = "center">
+        <div class="col-sm-6" text-align = "center">
+
+<img height="250" width="250" style = "cursor : pointer" src="{{row[2]}}" class="img-thumbnail img-responsive" alt="Cinque Terre"  onclick = "songsView('genre','{{row[1]}}','{{row[0]}}')" >
+        </div>
+        <div class="col-sm-6" text-align = "center">
+ <img src={{loop.nextitem[2]}} style = "cursor : pointer" onclick = "songsView('genre','{{loop.nextitem[1]}}','{{loop.nextitem[0]}}')" class="img-thumbnail img-responsive" height="250" width="250" alt="Avatar">
+          
+        </div>
+      </div>
+      <br>
+     {% endif %}
+     {% if loop.last %}
+        <div class="row"  text-align = "center">
+        <div class="col-sm-6">
+<img height="250" width="250" style = "cursor : pointer" src="{{row[2]}}" class="img-thumbnail img-responsive" alt="Cinque Terre"  onclick = "songsView('genre','{{row[1]}}','{{row[0]}}')" >
+        </div>
+      </div>
+     {% endif %} 
+    {% endif %}
+    {% endfor %} 
+  </div>
+
+
+
+    <div id = "artist" style = "display:none">  
+    {% for row in artist  %}
+      {% if loop.index %2 == 1 %}
+      {% if not loop.last %}
+        <div class="row"  text-align = "center">
+        <div class="col-sm-6" text-align = "center">
+
+<img height="180" width="200" style = "cursor : pointer" src="{{row[2]}}" class="img-thumbnail img-responsive" alt="Cinque Terre"  onclick = "songsView('artist','{{row[1]}}','{{row[0]}}')" >
+        </div>
+        <div class="col-sm-6" text-align = "center">
+ <img src={{loop.nextitem[2]}} style = "cursor : pointer" onclick = "songsView('artist','{{loop.nextitem[1]}}','{{loop.nextitem[0]}}')" class="img-thumbnail img-responsive" height="180" width="200" alt="Avatar">
+          
+        </div>
+      </div>
+      <br>
+     {% endif %}
+     {% if loop.last %}
+        <div class="row"  text-align = "center">
+        <div class="col-sm-6">
+<img height="180" width="200" style = "cursor : pointer" src="{{row[2]}}" class="img-thumbnail img-responsive" alt="Cinque Terre"  onclick = "songsView('artist','{{row[1]}}','{{row[0]}}')" >
+        </div>
+      </div>
+     {% endif %} 
+    {% endif %}
+    {% endfor %} 
+  </div>
+
+    <div id  = "trending" style = "display:none">
+   {% for row in artist  %}
+
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+           <img src={{row[2]}} class="img-rounded" height="90" width="110" alt="Avatar">
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="well">
+            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}       
+  </div>
+
+
+
+
+
+
+
+    <div id  = "radio" style = "display:none">
+   {% for row in artist  %}
+
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+           <img src={{row[2]}} class="img-rounded" height="90" width="110" alt="Avatar">
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="well">
+            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}       
+  </div>
+
+
+      <div id = "song_list" style = "display:none ">  
+
+    </div>
+
+    </div>
+
+
+
+
+
+    <div class="col-sm-2 well" >
+      <div class="thumbnail" style = "cursor : pointer" onclick = "changeView('genre')">
+        <p >Genre</p>
+      </div>      
+      <div class="thumbnail"  style = "cursor : pointer" onclick = "changeView('artist')">
+        <p>Artists</p>
+      </div>
+      <div class="thumbnail" onclick = "viewTrending()" style = "cursor : pointer">
+        <p>Trending</p>
+      </div>
+      <div class ="thumbnail" style = "cursor : pointer" >
+        <p>Radio : </p>
+        <p><a onclick = "devotional_view()" style="cursor:pointer">Devotinal Mode</a></p>
+        <p><a onclick = "hiphop_view()" style="cursor:pointer">Workout Mode</a></p>
+      </div>
+      <div class="hidden-lg hidden-md">
+        <br>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+    <!-- Modal for add  to playlist -->
+
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add to playlist</h4>
+      </div>
+      <div class="modal-body">
+
+    <div class="form-group" id = "p_name_list"></div>
+    <label> or </label><br>
+      <label for="usr">Create a New Playlist:</label>
+      <input type="text" class="form-control" id="new_playlist" value = ""> <br>
+      <button type="button" class="btn btn-primary" onclick = "playlist()">add to playlist </button>
+     </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Modal  to upload songs -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Upload Songs</h4>
+      </div>
+      <div class="modal-body">
+ <form id = "the-form"  method = "POST" 
+  enctype = "multipart/form-data">
+  <label >Select mp3 file</label>
+  <input type = "file" id = "the-file" name = "file" accept = "audio/*" required/><br>
+  <label >Select jpg file</label>  
+  <input type = "file" id = "the-img" name = "img" accept = "image/*" required/>
+<br>
+  <label for="usr">Song name:</label>
+      <input type="text" class="form-control" name="name" id="file_name" value = "" required> 
+
+  <div class="form-group">
+  <label for="sel1">Select Category</label>
+  <select class="form-control" id="sel1" name = "cat" required>
+  <option value="12">Romance</option>
+  <option value="3">Festivals</option>
+  <option value="9">Party</option>
+  <option value="1">Bhakti</option>
+  <option value="6">Hip Hop</option>
+  <option value="10">Retro</option>
+  <option value="14">Wedding</option>
+  <option value="11">Rock</option>
+  <option value="15">Workout</option>
+  <option value="5">Ghazal</option>
+  <option value="7">Kids</option>
+  <option value="2">Dance</option>
+  <option value="4">Special</option>
+  <option value="8">Old songs</option>
+  <option value="13">Sufi</option>
+
+
+  </select>
+</div>
+
+  <div class="form-group">
+  <label for="sel2">Select Artist</label>
+  <select class="form-control" id="sel2" name="art" required>
+  <option value="1">Arijit singh</option>
+  <option value="2">Neha Kakkar</option>
+  <option value="3">Honey Singh</option>
+  <option value="4">Atif Aslam</option>
+  <option value="5">A R Rahman</option>
+  <option value="6">Lata Mangeshkar</option>
+  <option value="7">Kishore Kumar</option>
+  <option value="8">Armaan Malik</option>
+  <option value="9">Sunidhi Cauhan</option>
+  <option value="11">Mohammed Rafi</option>
+  <option value="10">Nusrat Fateh Ali Khan</option>
+
+  </select>
+</div>
+  </form>     
+
+  <button onclick =  "upload_song()" class  = "btn btn-primary" > Submit </button><br>
+ <label id= "upload_status" style= "color:green"></label>      
+   </div>
+      <div class="modal-footer">
+        <button type="button" id  = "close_button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<footer class="container-fluid text-center" id = "footer">
+ <audio preload = "none" controls id = 'play' src = "" width = "100%" ></audio>
+</footer>
+
+</body>
+</html>

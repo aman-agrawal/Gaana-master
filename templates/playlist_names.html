@@ -1,0 +1,7 @@
+  <label for="sel3">Select Playlist</label>
+  <select class="form-control" id="playlist_select" name = "cat">
+  <option value=""></option>  
+  {% for row in rows %}
+  <option value="{{row}}">{{row}}</option>
+  {% endfor %}
+  </select>
